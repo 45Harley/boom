@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Website</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    .icon {
+      width: 250px;
+      height: 250px;
+      margin: 20px;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+    .selected {
+      border-color: red;
+    }
+    .counter {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+    .button {
+      margin: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="section1">
+    <h1>Choose One</h1>
+    <img src="rotten_tomato.png" alt="Rotten Tomato" class="icon" id="tomato" onclick="selectIcon('tomato')">
+    <img src="rotten_egg.png" alt="Rotten Egg" class="icon" id="egg" onclick="selectIcon('egg')">
+    <div class="counter" id="counter">Selected: None</div>
+    <button class="button" onclick="nextSection(2)">Next</button>
+    <button class="button" onclick="startOver()">Start Over</button>
+  </div>
 
+  <div id="section2" style="display: none;">
+    <h1>Choose Culprit</h1>
+    <img src="trump.png" alt="Trump Maga" class="icon" id="trump" onclick="selectIcon('Felon')">
+    <img src="billionaire.png" alt="Billionaire" class="icon" id="billionaire" onclick="selectIcon('billionaire')">
+    <div class="counter" id="counter2">Selected: None</div>
+    <button class="button" onclick="nextSection(3)">Next</button>
+    <button class="button" onclick="startOver()">Start Over</button>
+  </div>
+
+  <div id="section3" style="display: none;">
+    <h1>Location</h1>
+    <img src="florida_bg.gif" alt="Florida Map" style="width: 80%;">
+    <button class="button" onclick="nextSection(4)">Next</button>
+  </div>
+
+  <div id="section4" style="display: none;">
+    <h1>Maga Self Boom!</h1>
+    <img src="boom.gif" alt="Boom" style="width: 60%;">
+    <button class="button" onclick="startOver()">Start Over</button>
+  </div>
+
+  <script>
+    let selectedIcon = null;
+
+    function selectIcon(iconId) {
+      if (selectedIcon) {
+        document.getElementById(selectedIcon).classList.remove('selected');
+      }
+      selectedIcon = iconId;
+      document.getElementById(iconId).classList.add('selected');
+      document.getElementById('counter').innerText = `Selected: ${iconId}`;
+      document.getElementById('counter2').innerText = `Selected: ${iconId}`;
+    }
+
+    function nextSection(sectionNumber) {
+      if (!selectedIcon && sectionNumber !== 3) {
+        alert('Please select an icon before proceeding.');
+        return;
+      }
+      document.querySelectorAll('div[id^="section"]').forEach(section => section.style.display = 'none');
+      document.getElementById(`section${sectionNumber}`).style.display = 'block';
+
+      if (sectionNumber === 3) {
+        setTimeout(() => nextSection(4), 5000);
+      }
+    }
+
+    function startOver() {
+      selectedIcon = null;
+      document.querySelectorAll('.icon').forEach(icon => icon.classList.remove('selected'));
+      document.querySelectorAll('div[id^="section"]').forEach(section => section.style.display = 'none');
+      document.getElementById('section1').style.display = 'block';
+      document.getElementById('counter').innerText = 'Selected: None';
+      document.getElementById('counter2').innerText = 'Selected: None';
+    }
+  </script>
+</body>
+</html>
