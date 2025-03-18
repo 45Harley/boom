@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Website</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    .icon {
+      width: 250px;
+      height: 250px;
+      margin: 20px;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+    .selected {
+      border-color: red;
+    }
+    .counter {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+    .button {
+      margin: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .exit-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #f00;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body onload="incrementEnterProgram()">
+  <div id="section1">
+    <h1>Choose One</h1>
+    <img src="rotten_tomato.png" alt="Rotten Tomato" class="icon" id="tomato" onclick="selectIcon('tomato')">
+    <img src="rotten_egg.png" alt="Rotten Egg" class="icon" id="egg" onclick="selectIcon('egg')">
+    <div class="counter" id="counter">Selected: None</div>
+    <button class="button" onclick="nextSection(2)">Next</button>
+    <button class="button" onclick="startOver()">Start Over</button>
+    <button class="exit-button" onclick="exitProgram()">Exit Program</button>
+  </div>
+
+  <div id="section2" style="display: none;">
+    ▋
