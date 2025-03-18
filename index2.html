@@ -50,8 +50,96 @@
     <div class="counter" id="counter">Selected: None</div>
     <button class="button" onclick="nextSection(2)">Next</button>
     <button class="button" onclick="startOver()">Start Over</button>
-    <button class="exit-button" onclick="exitProgram()">Exit Program</button>
+    <button class="exit-button" onclick="showStatsAndExit()">Exit Program</button>
   </div>
 
   <div id="section2" style="display: none;">
-    ▋
+    <h1>Choose Culprit</h1>
+    <img src="trump.png" alt="Trump Maga" class="icon" id="trump" onclick="selectIcon('Felon')">
+    <img src="billionaire.png" alt="Billionaire" class="icon" id="billionaire" onclick="selectIcon('billionaire')">
+    <div class="counter" id="counter2">Selected: None</div>
+    <button class="button" onclick="nextSection(3)">Next</button>
+    <button class="button" onclick="startOver()">Start Over</button>
+    <button class="exit-button" onclick="showStatsAndExit()">Exit Program</button>
+  </div>
+
+  <div id="section3" style="display: none;">
+    <h1>Location</h1>
+    <img src="florida_bg.gif" alt="Florida Map" style="width: 80%;">
+    <button class="button" onclick="nextSection(4)">Next</button>
+    <button class="exit-button" onclick="showStatsAndExit()">Exit Program</button>
+  </div>
+
+  <div id="section4" style="display: none;">
+    <h1>Maga Self Boom!</h1>
+    <img src="boom.gif" alt="Boom" style="width: 60%;">
+    <button class="button" onclick="startOver()">Start Over</button>
+    <button class="exit-button" onclick="showStatsAndExit()">Exit Program</button>
+  </div>
+
+  <script>
+    let selectedIcon = null;
+
+    // Initialize localStorage variables if not already set
+    if (localStorage.getItem('enterProgram') === null) {
+      localStorage.setItem('enterProgram', '0');
+    }
+    if (localStorage.getItem('exitProgram') === null) {
+      localStorage.setItem('exitProgram', '0');
+    }
+
+    function incrementEnterProgram() {
+      let enterCount = parseInt(localStorage.getItem('enterProgram'), 10);
+      localStorage.setItem('enterProgram', enterCount + 1);
+    }
+
+    function showStatsAndExit() {
+      let enterCount = localStorage.getItem('enterProgram');
+      let exitCount = parseInt(localStorage.getItem('exitProgram'), 10) + 1;
+      localStorage.setItem('exitProgram', exitCount);
+
+      document.body.innerHTML = `
+        <h1>Program Stats</h1>
+        <p>Enter Program Count: ${enterCount}</p>
+        <p>Exit Program Count: ${exitCount}</p>
+      `;
+
+      setTimeout(() => {
+        window.close();
+      }, 10000);
+    }
+
+    function selectIcon(iconId) {
+      if (selectedIcon) {
+        document.getElementById(selectedIcon).classList.remove('selected');
+      }
+      selectedIcon = iconId;
+      document.getElementById(iconId).classList.add('selected');
+      document.getElementById('counter').innerText = `Selected: ${iconId}`;
+      document.getElementById('counter2').innerText = `Selected: ${iconId}`;
+    }
+
+    function nextSection(sectionNumber) {
+      if (!selectedIcon && sectionNumber !== 3) {
+        alert('Please select an icon before proceeding.');
+        return;
+      }
+      document.querySelectorAll('div[id^="section"]').forEach(section => section.style.display = 'none');
+      document.getElementById(`section${sectionNumber}`).style.display = 'block';
+
+      if (sectionNumber === 3) {
+        setTimeout(() => nextSection(4), 5000);
+      }
+    }
+
+    function startOver() {
+      selectedIcon = null;
+      document.querySelectorAll('.icon').forEach(icon => icon.classList.remove('selected'));
+      document.querySelectorAll('div[id^="section"]').forEach(section => section.style.display = 'none');
+      document.getElementById('section1').style.display = 'block';
+      document.getElementById('counter').innerText = 'Selected: None';
+      document.getElementById('counter2').innerText = 'Selected: None';
+    }
+  </script>
+</body>
+</html>
