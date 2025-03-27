@@ -55,7 +55,7 @@
 
   <div id="section2" style="display: none;">
     <h1>Choose Culprit</h1>
-    <img src="trump.png" alt="Trump Maga" class="icon" id="trump" onclick="selectIcon('Felon')">
+    <img src="trump.png" alt="Trump Maga" class="icon" id="trump" onclick="selectIcon('trump')">
     <img src="billionaire.png" alt="Billionaire" class="icon" id="billionaire" onclick="selectIcon('billionaire')">
     <div class="counter" id="counter2">Selected: None</div>
     <button class="button" onclick="nextSection(3)">Next</button>
@@ -116,7 +116,9 @@
       selectedIcon = iconId;
       document.getElementById(iconId).classList.add('selected');
       document.getElementById('counter').innerText = `Selected: ${iconId}`;
-      document.getElementById('counter2').innerText = `Selected: ${iconId}`;
+      if (document.getElementById('counter2')) {
+        document.getElementById('counter2').innerText = `Selected: ${iconId}`;
+      }
     }
 
     function nextSection(sectionNumber) {
